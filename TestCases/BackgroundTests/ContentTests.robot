@@ -18,7 +18,6 @@ Page title is Tausta
     element text should be    //div[starts-with(@class,'Header_header__title')]    TAUSTA
 
 Page title changes to Background
-    [Tags]    Regression
     # Arrange
     Start Browser and Maximize    ${URL}
     sleep    4s
