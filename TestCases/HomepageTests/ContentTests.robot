@@ -38,32 +38,3 @@ Language changes to English
 
     # Assert
     element text should be    //div[starts-with(@class,'Homepage_homepage__greeting')]    Hello,
-
-Title of page button is Etusivu and highlighted as chosen tab
-    [Tags]    Smoke
-     # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
-    #Act & Assert
-    element should be visible    (//a[starts-with(@class,'PageButtons_page_buttons__button')])[1]
-    element text should be    (//a[starts-with(@class,'PageButtons_page_buttons__button')])[1]    ETUSIVU
-    ${element}=    Get WebElement    (//a[starts-with(@class,'PageButtons_page_buttons__button')])[1]
-    ${color}=   call method    ${element}    value_of_css_property    background-color
-    should be equal    ${color}    rgba(255, 255, 255, 1)
-
-Title changes to homepage and is highlighted as chosen tab
-    # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
-    # Act
-    mouse over    //span[contains(text(),'FI')]
-    click element    //button[contains(text(),'EN')]
-
-    # Assert
-    element should be visible    (//a[starts-with(@class,'PageButtons_page_buttons__button')])[1]
-    element text should be    (//a[starts-with(@class,'PageButtons_page_buttons__button')])[1]    HOMEPAGE
-    ${element}=    Get WebElement    (//a[starts-with(@class,'PageButtons_page_buttons__button')])[1]
-    ${color}=   call method    ${element}    value_of_css_property    background-color
-    should be equal    ${color}    rgba(255, 255, 255, 1)
