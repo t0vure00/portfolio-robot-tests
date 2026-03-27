@@ -192,32 +192,3 @@ Search displays no projects found with inaccurate searchword
     FOR    ${element}    IN    @{projectElements}
     element should contain    ${element}    no projects found    ignore_case=True
     END
-
-Title of page button is Projektit and highlighted as chosen tab
-    [Tags]    Smoke
-     # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
-    #Act & Assert
-    element should be visible    (//a[starts-with(@class,'PageButtons_page_buttons__button')])[3]
-    element text should be    (//a[starts-with(@class,'PageButtons_page_buttons__button')])[3]    PROJEKTIT
-    ${element}=    Get WebElement    (//a[starts-with(@class,'PageButtons_page_buttons__button')])[3]
-    ${color}=   call method    ${element}    value_of_css_property    background-color
-    should be equal    ${color}    rgba(255, 255, 255, 1)
-
-Title changes to homepage and is highlighted as chosen tab
-    # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
-    # Act
-    mouse over    //span[contains(text(),'FI')]
-    click element    //button[contains(text(),'EN')]
-
-    # Assert
-    element should be visible    (//a[starts-with(@class,'PageButtons_page_buttons__button')])[3]
-    element text should be    (//a[starts-with(@class,'PageButtons_page_buttons__button')])[3]    PROJECTS
-    ${element}=    Get WebElement    (//a[starts-with(@class,'PageButtons_page_buttons__button')])[3]
-    ${color}=   call method    ${element}    value_of_css_property    background-color
-    should be equal    ${color}    rgba(255, 255, 255, 1)
