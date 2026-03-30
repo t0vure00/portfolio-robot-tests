@@ -13,8 +13,7 @@ ${URL_P}  https://t0vure00.github.io/portfolio-app/#/projects
 Title of page button is Etusivu and highlighted as chosen tab
     [Tags]    Smoke
      # Arrange
-    Start Browser and Maximize    ${URL_H}
-    sleep    4s
+     Start Browser Maximize and Wait Header  ${URL_H}
 
     #Act & Assert
     ${homepageButton}=    Get WebElement  (//a[starts-with(@class,'PageButtons_page_buttons__button')])[1]
@@ -25,8 +24,7 @@ Title of page button is Etusivu and highlighted as chosen tab
 
 Etusivu is highlighted as chosen tab and others
      # Arrange
-    Start Browser and Maximize    ${URL_H}
-    sleep    4s
+    Start Browser Maximize and Wait Header    ${URL_H}
 
     #Act & Assert
     ${homepageButton}=    Get WebElement  (//a[starts-with(@class,'PageButtons_page_buttons__button')])[1]
@@ -45,8 +43,7 @@ Etusivu is highlighted as chosen tab and others
 
 Title changes to Homepage and is highlighted as chosen tab
     # Arrange
-    Start Browser and Maximize    ${URL_H}
-    sleep    4s
+    Start Browser Maximize and Wait Header    ${URL_H}
 
     # Act
     Toggle Lang Button to EN
@@ -61,8 +58,7 @@ Title changes to Homepage and is highlighted as chosen tab
 Title of page button is Tausta and highlighted as chosen tab
     [Tags]    Smoke
      # Arrange
-    Start Browser and Maximize    ${URL_B}
-    sleep    4s
+    Start Browser Maximize and Wait Header    ${URL_B}
 
     #Act & Assert
     ${backgroundButton}=    Get WebElement  (//a[starts-with(@class,'PageButtons_page_buttons__button')])[2]
@@ -72,10 +68,9 @@ Title of page button is Tausta and highlighted as chosen tab
     should be equal    ${color}    rgba(255, 255, 255, 1)
 
 Title changes to Background and is highlighted as chosen tab
-    [Tags]    Smoke    RN
+    [Tags]    Smoke
     # Arrange
-    Start Browser and Maximize    ${URL_B}
-    sleep    4s
+    Start Browser Maximize and Wait Header    ${URL_B}
 
     # Act
     Toggle Lang Button to EN
@@ -90,8 +85,7 @@ Title changes to Background and is highlighted as chosen tab
 Title of page button is Projektit and highlighted as chosen tab
     [Tags]    Smoke
      # Arrange
-    Start Browser and Maximize    ${URL_P}
-    sleep    4s
+    Start Browser Maximize and Wait Header    ${URL_P}
 
     #Act & Assert
     ${projectsButton}=    Get WebElement  (//a[starts-with(@class,'PageButtons_page_buttons__button')])[3]
@@ -102,8 +96,7 @@ Title of page button is Projektit and highlighted as chosen tab
 
 Title changes to Projects and is highlighted as chosen tab
     # Arrange
-    Start Browser and Maximize    ${URL_P}
-    sleep    4s
+    Start Browser Maximize and Wait Header    ${URL_P}
 
     # Act
     Toggle Lang Button to EN

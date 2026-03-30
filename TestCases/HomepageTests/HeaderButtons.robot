@@ -2,18 +2,15 @@
 Library    SeleniumLibrary
 Resource    ../../Resources/Common.robot
 Test Teardown    close browser
+# Arrange
+Test Setup    Start Browser Maximize and Wait Header    https://t0vure00.github.io/portfolio-app/#/
 Force Tags    Regression
 
 *** Variables ***
-${URL}  https://t0vure00.github.io/portfolio-app/#/
 
 *** Test Cases ***
 LinkedIn Button goes to LinkedIn
     [Tags]    Smoke
-    # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
     # Act
     click element    //div[contains(text(),'LinkedIn')]
 
@@ -21,10 +18,6 @@ LinkedIn Button goes to LinkedIn
     title should be    Sign Up | LinkedIn
 
 Language Button has Finnish by default and changes to English when pressed
-    # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
     # Guard Assert
     element text should be    //span[contains(text(),'FI')]    FI
 
