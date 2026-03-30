@@ -2,26 +2,19 @@
 Library    SeleniumLibrary
 Resource    ../../Resources/Common.robot
 Test Teardown    close browser
+# Arrange
+Test Setup    Start Browser Maximize and Wait Header    https://t0vure00.github.io/portfolio-app/#/projects
 Force Tags    Regression
 
 *** Variables ***
-${URL}  https://t0vure00.github.io/portfolio-app/#/projects
 
 *** Test Cases ***
 Page title is Projektit
     [Tags]    Smoke
-    # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
     # Act & Assert
     element text should be    //div[starts-with(@class,'Header_header__title')]    PROJEKTIT
 
 Page title changes to Projects
-    # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
     # Act
     mouse over    //span[contains(text(),'FI')]
     click element    //button[contains(text(),'EN')]
@@ -30,18 +23,10 @@ Page title changes to Projects
     element text should be    //div[starts-with(@class,'Header_header__title')]    PROJECTS
 
 Language is Finnish by default
-    # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
     # Act & Assert
     element text should be    //div[starts-with(@class,'ProjectBlock_project_block__title')]    Käytetyt teknologiat
 
 Language changes to English
-    # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
     # Act
     mouse over    //span[contains(text(),'FI')]
     click element    //button[contains(text(),'EN')]
@@ -51,94 +36,57 @@ Language changes to English
 
 Three projects block are shown by default
     [Tags]    Smoke
-    # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
     # Act
     ${projectElements}=    Get WebElements    //div[starts-with(@class,'Projects_background__scroll')]/div[starts-with(@class,'ProjectBlock_project_block')]
 
     # Assert
-    element should be visible    ${projectElements}[0]
-    element should be visible    ${projectElements}[1]
-    element should be visible    ${projectElements}[2]
-    element should not be visible    ${projectElements}[3]
-    element should not be visible    ${projectElements}[4]
-
+    ${states}=    create list    0    0    0    1    1
+    Check projects visibility  ${projectElements}    ${states}
 
 Projects move forward by one when next arrow is pressed
     [Tags]    Smoke
-    # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
     # Act
     click element    //div[starts-with(@class,'Projects_carousel_arrow_next')]
     ${projectElements}=    Get WebElements    //div[starts-with(@class,'Projects_background__scroll')]/div[starts-with(@class,'ProjectBlock_project_block')]
 
     # Assert
-    element should not be visible    ${projectElements}[0]
-    element should be visible    ${projectElements}[1]
-    element should be visible    ${projectElements}[2]
-    element should be visible    ${projectElements}[3]
-    element should not be visible    ${projectElements}[4]
+    ${states}=    create list    1    0    0    0    1
+    Check projects visibility  ${projectElements}    ${states}
 
 Projects move back by one when prev arrow is pressed
     [Tags]    Smoke
-    # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
     # Guard Act
     click element    //div[starts-with(@class,'Projects_carousel_arrow_next')]
     ${projectElements}=    Get WebElements    //div[starts-with(@class,'Projects_background__scroll')]/div[starts-with(@class,'ProjectBlock_project_block')]
 
     # Guard Assert
-    element should not be visible    ${projectElements}[0]
-    element should be visible    ${projectElements}[1]
-    element should be visible    ${projectElements}[2]
-    element should be visible    ${projectElements}[3]
-    element should not be visible    ${projectElements}[4]
+    ${states}=    create list    1    0    0    0    1
+    Check projects visibility  ${projectElements}    ${states}
 
     # Act
     click element    //div[starts-with(@class,'Projects_carousel_arrow_prev')]
     ${projectElements}=    Get WebElements    //div[starts-with(@class,'Projects_background__scroll')]/div[starts-with(@class,'ProjectBlock_project_block')]
 
     # Assert
-    element should be visible    ${projectElements}[0]
-    element should be visible    ${projectElements}[1]
-    element should be visible    ${projectElements}[2]
-    element should not be visible    ${projectElements}[3]
-    element should not be visible    ${projectElements}[4]
+    ${states}=    create list    0    0    0    1    1
+    Check projects visibility  ${projectElements}    ${states}
 
 Last project is shown
-    # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
-    # Guard Act
+    # Act
     ${projectElements}=    Get WebElements    //div[starts-with(@class,'Projects_background__scroll')]/div[starts-with(@class,'ProjectBlock_project_block')]
     ${length}=    evaluate    len($projectElements) - 3
     FOR    ${i}    IN RANGE   ${length}
     click element    //div[starts-with(@class,'Projects_carousel_arrow_next')]
     END
 
-    # Guard Assert
-    element should not be visible    ${projectElements}[0]
-    element should not be visible    ${projectElements}[1]
-    element should be visible    ${projectElements}[2]
-    element should be visible    ${projectElements}[3]
-    element should be visible    ${projectElements}[4]
+    # Assert
+    ${states}=    create list    1    1    0    0    0
+    Check projects visibility  ${projectElements}    ${states}
 
 Search works with lower case letters
     [Tags]    Smoke
-    # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
     # Act
-    input text    name:search    arduino
-    click element    //div[starts-with(@class,'Header_search_button')]
+    Search for    arduino
 
     # Assert
     ${projectElements}=    Get WebElements    //div[starts-with(@class,'Projects_background__scroll')]/div[starts-with(@class,'ProjectBlock_project_block')]
@@ -148,13 +96,8 @@ Search works with lower case letters
 
 Search works with upper case letters
     [Tags]    Smoke
-    # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
     # Act
-    input text    name:search    HTML
-    click element    //div[starts-with(@class,'Header_search_button')]
+    Search for    HTML
 
     # Assert
     ${projectElements}=    Get WebElements    //div[starts-with(@class,'Projects_background__scroll')]/div[starts-with(@class,'ProjectBlock_project_block')]
@@ -163,13 +106,8 @@ Search works with upper case letters
     END
 
 Search works with mixed case letters
-    # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
     # Act
-    input text    name:search    JaVaSCRipT
-    click element    //div[starts-with(@class,'Header_search_button')]
+    Search for    JaVaSCRipT
 
     # Assert
     ${projectElements}=    Get WebElements    //div[starts-with(@class,'Projects_background__scroll')]/div[starts-with(@class,'ProjectBlock_project_block')]
@@ -179,16 +117,43 @@ Search works with mixed case letters
 
 Search displays no projects found with inaccurate searchword
     [Tags]    Smoke
-    # Arrange
-    Start Browser and Maximize    ${URL}
-    sleep    4s
-
     # Act
-    input text    name:search    cow
-    click element    //div[starts-with(@class,'Header_search_button')]
+    Search for    cow
 
     # Assert
     ${projectElements}=    Get WebElements    //div[starts-with(@class,'Projects_background__scroll')]/div[starts-with(@class,'ProjectBlock_project_block')]
     FOR    ${element}    IN    @{projectElements}
     element should contain    ${element}    no projects found    ignore_case=True
+    END
+
+Search field is emptied show again three first projects
+    [Tags]    Smoke
+    # Guard Act
+    Search for    javascript
+    sleep    3s
+
+    # Guard Assert
+    ${projectElements}=    Get WebElements    //div[starts-with(@class,'Projects_background__scroll')]/div[starts-with(@class,'ProjectBlock_project_block')]
+    FOR    ${element}    IN    @{projectElements}
+    element should contain    ${element}    javascript    ignore_case=True
+    END
+
+    # Act
+    press keys    name:search    CTRL+A+BACKSPACE
+
+    # Assert
+    ${projectElements}=    Get WebElements    //div[starts-with(@class,'Projects_background__scroll')]/div[starts-with(@class,'ProjectBlock_project_block')]
+    ${states}=    create list    0    0    0    1    1
+    Check projects visibility  ${projectElements}    ${states}
+
+*** Keywords ***
+Check projects visibility
+    [Arguments]    ${projects}    ${states}
+    ${length}=    get length    ${projects}
+    FOR    ${i}    IN RANGE    ${length}
+        IF    ${states}[${i}] == 0
+            element should be visible    ${projects}[${i}]
+        ELSE
+            element should not be visible    ${projects}[${i}]
+        END
     END
